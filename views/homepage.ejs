@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function solve() {
+            fetch("/linsolve?matrix=<%= JSON.stringify(linkSet)%>")
+            .then(response => response.json())
+            .then(json => {
+                document.getElementById("linkMatrix").style.display = 'block'
+                let locations = "<%= locations%>".split(",")
+                let ref = document.getElementById('page-ranking')
+                let str = ''
+                str += '<table border="1" cellspacing="0">' 
+                for (let i in locations){
+                    str += '<tr>'
+                    str += `<td><strong>${locations[json.disp_vec_index[locations.length-1 - i]]}</strong></td>`
+                    str += `<td>${json.prv[locations.length-1 - i]}</td>`
+                    str +=`</tr>` 
+                }
+                str += '</table>'
+                ref.innerHTML = str
+            })
+        }
+    </script>
+    <div>
+    <%linkMatrix.forEach(links => { %>
+        <h3><%= links.location%></h3>
+    <%  links.links.forEach(link =>  {%>
+            <a href="<%= link %>"><%= 'http://localhost:3000'+link %></a><br>
+    <%  })}) %> 
+    </div><br><br>
+    <button onclick="solve()">Solve</button>
+    <br><br>
+    <div id="linkMatrix" style="display:none">
+        <h2>Link Matrix</h2>
+        <table border="1" cellspacing="0">
+            <th></th>
+        <%  locations.forEach( location => { %>
+            <th><%= location %></th>
+        <%  }) %>
+
+        
+        <%  linkSet.forEach( (row, index) => { %>
+            <tr>
+                <td><strong><%= locations[index]%></strong></td>
+        <%      row.forEach(value => {%>
+                <td><%= value %></td>
+        <%      })%>
+            </tr>
+        <%  })%>    
+        
+        </table>
+        <br>
+        <h2>Page Rank Vector</h2>
+    </div><br>
+    <div id="page-ranking"></div>
+</body>
+</html>
