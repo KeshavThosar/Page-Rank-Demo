@@ -13,6 +13,6 @@ The demostration video: https://www.youtube.com/watch?v=jUKsqBxP4-k
 ``npm run dev``
 
 ## Todo (in future)
-[ ] Change the eigen value calculation algorithm
-[ ] Take care for dead end condition
-[ ] Beautifying the Homepage
+- [ ] Change the eigen value calculation algorithm
+- [ ] Take care for dead end condition
+- [ ] Beautifying the Homepage
